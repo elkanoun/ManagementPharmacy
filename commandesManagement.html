@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+    <h1>Gestion des commandes</h1>
+    <!-- formulaire recherche d'une commande -->
+    <div class="col-md-12">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Consultation commandes d'un médicament</div>
+       <div class="panel-body">
+        <form th:action="@{searchCommandes}" method="get">
+         <div>
+          <label>Nom médicament:</label>
+          <input type="text" name="motCle"/>
+          <button type="submit" class="btn btn-primary">ok</button>
+         </div>
+        </form>
+       </div>
+     </div>
+     
+     <!-- informations commandes médicament -->
+     <div class="panel panel-primary" th:if="${lignesCommandes}">
+       <div class="panel-heading">Informations commandes d'un médicament</div>
+       <div class="panel-body">
+        <p>Informations commandes du médicament recherché:</p>
+        <table class="table">
+          <thead>
+           <tr>
+            <th>CodeCmd</th><th>DateCmd</th><th>FournisseurCmd</th><th>MontantCmd</th><th>isCmdValid</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="lc:${lignesCommandes}">
+            <td th:text="${lc.pk.commande.num}"></td>
+            <td th:text="${lc.pk.commande.date}"></td>
+            <td th:text="${lc.pk.commande.fournisseur.nom}"></td>
+            <td th:text="${lc.pk.commande.montant}"></td>
+            <td th:text="${lc.pk.commande.valid}"></td>
+            
+  
+            <td><a th:href="@{showLignesCommandesCmd(num=${lc.pk.commande.num})}">médicaments</a></td>
+            <td><a th:href="@{editCommande(num=${lc.pk.commande.num})}">edit</a></td>
+            <td><a th:href="@{deleteCommande(num=${lc.pk.commande.num})}">delete</a></td>
+           </tr>
+          </tbody>
+         </table>
+       </div>
+     </div>
+     
+  
+     
+    <!-- informations sur lignesCommandes de la commande sélectionée --> 
+     <div class="panel panel-primary" th:if="${lignesCommandesCmd}">
+       <div class="panel-heading">Médicaments de la commande recherchée</div>
+       <div class="panel-body">
+       <table class="table">
+          <thead>
+           <tr>
+             <th>numCmd</th><th>dateCmd</th><th>fournisseurCmd</th><th>montantCmd</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr>
+            <td th:text="${cmdSearched.num}"></td>
+            <td th:text="${cmdSearched.date}"></td>
+            <td th:text="${cmdSearched.fournisseur.nom}"></td>
+            <td th:text="${cmdSearched.montant}"></td>
+           </tr>
+          </tbody> 
+         </table>
+                 
+        <table class="table">
+          <thead>
+           <tr>
+             <th>LibMedicament</th><th>prixAchat</th><th>Quantité</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="lcCmd:${lignesCommandesCmd}">
+            <td th:text="${lcCmd.pk.medicament.libelle}"></td>
+            <td th:text="${lcCmd.pk.medicament.prixAchat}"></td>
+            <td th:text="${lcCmd.quantiteMedicament}"></td>
+            <td><a th:href="@{editLigneCommande(numCmd=${lcCmd.pk.commande.num},codeMedic=${lcCmd.pk.medicament.code})}">edit</a></td>
+           </tr>
+          </tbody> 
+         </table>
+       </div>
+     </div>
+         
+        
+      
+    </div> 
+    
+    
+ </div>
+</body>
+</html>

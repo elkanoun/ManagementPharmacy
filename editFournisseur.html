@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Modifier un fournisseur</div>
+       <div class="panel-body">
+       
+        <form th:action="@{saveFournisseur}" method="post">
+        <div class="form-group">
+          <label class="control-label">ID fournisseur:</label>
+          <input class="form-control" type="text" name="id"
+          th:value="${fournisseur.id}"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Nom fournisseur:</label>
+          <input class="form-control" type="text" name="nom"
+          th:value="${fournisseur.nom}"/>
+         </div>
+         <span class="red" th:errors="${fournisseur.nom}"></span>
+         <div class="form-group">
+          <label class="control-label">Adresse fournisseur:</label>
+          <input class="form-control" type="text" name="adresse"
+          th:value="${fournisseur.adresse}"/>
+        </div>
+        <span class="red" th:errors="${fournisseur.adresse}"></span>
+         <div class="form-group">
+          <label class="control-label">Ville fournisseur:</label>
+          <input class="form-control" type="text" name="ville"
+          th:value="${fournisseur.ville}"/>
+         </div>
+         <span class="red" th:errors="${fournisseur.ville}"></span>
+         <div class="form-group">
+          <label class="control-label">tél fournisseur:</label>
+          <input class="form-control" type="text" name="tel"
+          th:value="${fournisseur.tel}"/>
+         </div>
+         <span class="red" th:errors="${fournisseur.tel}"></span>
+         <div class="form-group">
+          <label class="control-label">Email fournisseur:</label>
+          <input class="form-control" type="text" name="email"
+          th:value="${fournisseur.email}"/>
+         </div>
+         <span class="red" th:errors="${fournisseur.email}"></span>
+         <div>
+          <button type="submit" class="btn btn-primary">Valider</button>
+         </div>
+        </form>
+       
+       </div>
+     </div>
+     
+     
+     
+     <p>
+       <a th:href="@{commanderMedicament}">Retour</a>
+     </p>
+     
+    </div>    
+ </div>
+</body>
+</html>

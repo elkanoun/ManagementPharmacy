@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+    <h1>Gestion des fournisseurs des médicaments</h1>
+    <!-- formulaire recherche d'un fournisseur -->
+    <div class="col-md-12">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Consultation d'un fournisseur</div>
+       <div class="panel-body">
+        <form th:action="@{rechercherFournisseur}" method="get">
+         <div>
+          <label>Nom fournisseur:</label>
+          <input type="text" name="motCle" th:text="${motCle}"/>
+          <button type="submit" class="btn btn-primary">ok</button>
+         </div>
+        </form>
+       </div>
+     </div>
+     <div class="panel panel-primary" th:if="${listFournisseurs}">
+      <div class="panel-heading">Informations sur le fournisseur</div>
+       <div class="panel-body">
+        <!-- informations fournisseur de recherche -->
+        <p>Informations fournisseur recherché:</p>
+        
+        <table class="table">
+          <thead>
+           <tr>
+            <th>Code</th><th>Nom</th><th>Adresse</th><th>Ville</th><th>Tel</th><th>Email</th><th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="f:${listFournisseurs}">
+            <td th:text="${f.id}"></td>
+            <td th:text="${f.nom}"></td>
+            <td th:text="${f.adresse}"></td>
+            <td th:text="${f.ville}"></td>
+            <td th:text="${f.tel}"></td>
+            <td th:text="${f.email}"></td>
+            <td><a onclick="return confirm('êtes vous sûr?')" th:href="@{deleteFournisseur(id=${f.id})}"
+            >Delete</a></td>
+            <td><a th:href="@{formUpdateFournisseur(nom=${f.nom})}">Editer</a></td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="container">
+          <ul class="nav nav-pills">
+           <li th:each="pa,status:${pages}" th:class="${pageCourante}==${status.index}?'active':''"><a th:href="@{rechercherFournisseur(page=${status.index}, 
+           size=${status.size},motCle=${motCle})}" th:text="${status.index}"></a></li>
+          </ul>
+         </div>
+         <p>
+           <a th:href="@{formFournisseur}">Nouveau</a>
+         </p>
+       </div>
+     </div>
+     
+    </div> 
+    
+    
+ </div>
+</body>
+</html>

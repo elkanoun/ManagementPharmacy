@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Mettre à jour lignes de commande</div>
+       <div class="panel-body">
+       
+        <form th:action="@{saveLigneCommandeCmd}" method="post">
+         <div class="form-group">
+          <label class="control-label">Num commande:</label>
+          <input class="form-control" type="text" name="num" th:value="${ligneCommande.pk.commande.num}"/>
+         </div>
+         <!-- <div class="form-group">
+          <label class="control-label">Libellé old médicament:</label>
+          <select id="libelleMedicament" name="libOldMedicament">
+           <option th:each="m:${listMedicaments}" th:value="${m.libelle}" th:text="${m.libelle}"></option>
+           <option th:value="${ligneCommande.pk.medicament.libelle}" th:text="${ligneCommande.pk.medicament.libelle}" selected="selected"></option>
+          </select>
+        </div> -->
+        <div class="form-group">
+        <label class="control-label">Libellé old médicament:</label>
+        <input type="text" name="libOldMedicament" th:value="${ligneCommande.pk.medicament.libelle}"/>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Libellé selected médicament:</label>
+          <select id="libelleMedicament" name="libSelectedMedicament">
+           <option th:each="m:${listMedicaments}" th:value="${m.libelle}" th:text="${m.libelle}"></option>
+           <option th:value="${ligneCommande.pk.medicament.libelle}" th:text="${ligneCommande.pk.medicament.libelle}" selected="selected"></option>
+          </select>
+        </div>
+         <div class="form-group">
+          <label class="control-label">Quantité médicament:</label>
+          <input class="form-control" type="text" name="quantiteMedicament"
+          th:value="${ligneCommande.quantiteMedicament}"/>
+         </div>
+         
+         <div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+         </div>
+        </form>
+       
+       </div>
+     </div>
+     
+     
+     
+     <p>
+       <a th:href="@{commanderMedicament}">Retour</a>
+     </p>
+     
+    </div>    
+ </div>
+</body>
+</html>

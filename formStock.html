@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Ajouter un stock</div>
+       <div class="panel-body">
+       
+        <form th:action="@{saveStock}" method="post">
+         <div class="form-group">
+          <label class="control-label">Nom stock:</label>
+          <input class="form-control" type="text" name="libelle"
+          th:value="${stock.libelle}"/>
+         </div>
+         <span class="red" th:errors="${stock.libelle}"></span>
+         
+         <div class="form-group">
+          <label class="control-label">Quantité max:</label>
+          <input class="form-control" type="text" name="quantiteMax"
+          th:value="${stock.quantiteMax}"/>
+         </div>
+         <span class="red" th:errors="${stock.quantiteMax}"></span>
+         
+         <div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+         </div>
+        </form>
+       
+       </div>
+     </div>
+     
+     
+     
+     <p>
+       <a th:href="@{rechercherStock(motCle='')}">Retour</a>
+     </p>
+     
+    </div>    
+ </div>
+</body>
+</html>

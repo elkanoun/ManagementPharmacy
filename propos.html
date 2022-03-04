@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">A propos du développement</div>
+       <div class="panel-body">
+       
+         <div>
+          <label><small>Developed by :</small></label>
+         </div>
+         <div>
+          <label>La société infoKMED.</label>
+         </div>
+         <div>
+          <label><small>Copyright @2019</small></label>
+         </div>
+         
+       </div>
+     </div>
+     
+    </div>    
+ </div>
+</body>
+</html>

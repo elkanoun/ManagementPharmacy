@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Ajouter médicament au stock</div>
+       <div class="panel-body">
+       
+        <form th:action="@{saveStockMedicament}" method="post">
+         <div class="form-group">
+          <label class="control-label">Nom médicament:</label>
+          <select id="libelleMedicament" name="libelleMedicament">
+           <option class="form-control" th:each="m:${listMedicaments}" th:value="${m.libelle}"  th:text="${m.libelle}"></option>
+          </select>
+          <p>
+            <a th:href="@{commandes/formMedicament}">Nouveau</a>
+          </p>
+          
+         </div>
+         
+          
+         <div class="form-group">
+          <label class="control-label">Nom stock:</label>
+          <select id="libelleStock" name="libelleStock">
+           <option class="form-control" th:each="s:${listStocks}" th:value="${s.libelle}" th:text="${s.libelle}"></option>
+          </select>
+          <p>
+            <a th:href="@{formStock}">Nouveau</a>
+          </p>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Quantité:</label>
+          <input class="form-control" type="text" name="quantiteMedicament"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Alert Quantité:</label>
+          <input class="form-control" type="text" name="alertQuantite"/>
+         </div>
+         <div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+         </div>
+        </form>
+        <p>
+         <a th:href="@{searchStocksMédicamentsDeMedic?motCle=}">Retour</a>
+       </p>
+       
+       </div>
+     </div>
+     
+     
+     
+     
+     
+    </div>    
+ </div>
+</body>
+</html>

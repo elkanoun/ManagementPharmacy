@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+    <h1>Bienvenue à la pharmacie KMED</h1>
+    <!-- formulaire recherche d'un médcament -->
+    <div class="col-md-12">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Consultation d'un médicament</div>
+       <div class="panel-body">
+        <form th:action="@{/commandes/rechercherMedicament}" method="get">
+         <div>
+          <label>Nom médicament:</label>
+          <input type="text" name="motCle"/>
+          <button type="submit" class="btn btn-primary">ok</button>
+         </div>
+        </form>
+       </div>
+     </div>
+     <div class="panel panel-primary" th:if="${medicaments}">
+      <div class="panel-heading">Informations sur le médicament</div>
+      
+       <div class="panel-body">
+        <!-- informations médicaments de recherche -->
+        <p>Informations médicament recherché:</p>
+        
+        <table class="table">
+          <thead>
+           <tr>
+            <th>CodeMedicament</th><th>LibelleMedicament</th><th>PrixAchat</th><th>PrixVente</th><th>Notice</th><th>SousFamille</th><th>Famille</th><th>dateExpiration</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="m:${medicaments}">
+            <td th:text="${m.code}"></td>
+            <td th:text="${m.libelle}"></td>
+            <td th:text="${m.prixAchat}"></td>
+            <td th:text="${m.prixVente}"></td>
+            <td th:text="${m.notice}"></td>
+            <td th:text="${m.sousFamille.libelle}"></td>
+            <td th:text="${m.sousFamille.famille.libelle}"></td>
+            <td th:text="${m.dateExpiration}"></td>
+            <td>
+              <a th:href="@{editMedicament(code=${m.code})}">edit</a>
+            </td>
+            <td>
+              <a th:href="@{stocksMedicamentRecherche(motCle=${motCle})}">stocksMédicament</a>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         
+         <div>
+          <ul class="nav nav-pills">
+           <li th:each="pa,status:${pages}" th:class="${pageCourante}==${status.index}?'active':''" ><a th:href="@{rechercherMedicament(page=${status.index},size=${size},
+               motCle=${motCle})}" th:text="${status.index}"></a></li>
+          </ul>
+         </div>
+        </div>
+        </div>
+         
+         
+         
+         <!-- informations stocks médicaments de recherche -->
+        <div class="panel panel-primary" th:if="${stockMedicaments}">
+        <div class="panel-heading">Stocks médicament recherché</div>
+         <div class="panel-body">
+         <table class="table">
+          <thead>
+           <tr>
+            <th>CodeStock</th><th>Libellestock</th><th>LibMedic</th><th>QteMaxStock</th><th>QteMedicStock</th><th></th><th>AlertQteMedicStock</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="sm:${stockMedicaments}">
+            <td th:text="${sm.pk.stock.id}"></td>
+            <td th:text="${sm.pk.stock.libelle}"></td>
+            <td th:text="${sm.pk.medicament.libelle}"></td>
+            <td th:text="${sm.pk.stock.quantiteMax}"></td>
+            <td th:text="${sm.quantite}"></td> <!-- ToDo style alert stock -->
+            <td><span th:if="${sm.quantite}<=${sm.alertQuantite}" style="color:red">Stock insuffisant!!!</span></td>
+             <td th:text="${sm.alertQuantite}"></td>
+            <td>
+              <a th:href="@{commanderMedicament(code=${sm.pk.medicament.code})}">Commander</a>
+            </td>
+            <td>
+              <a th:href="@{vendreMedicament(codeMedicament=${sm.pk.medicament.code},codeStock=${sm.pk.stock.id})}">Vendre</a>
+            </td>
+            
+           </tr>
+          </tbody>
+         </table>
+         
+         <div>
+          <ul class="nav nav-pills">
+           <li th:each="pa,status:${pages}" th:class="${pageCourante}==${status.index}?'active':''">
+            <a th:href="@{stocksMedicamentRecherche(page=${status.index},size=${size},motCle=${motCle})}" th:text=${status.index}></a>
+           </li>
+          </ul>
+         </div>
+         </div>
+        </div>
+       
+       
+     
+    </div> 
+    
+    
+ </div>
+</body>
+</html>

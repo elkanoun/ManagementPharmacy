@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+    <h1>Bienvenue à la pharmacie KMED</h1>
+    <!-- formulaire recherche d'un médcament -->
+    <div class="col-md-12">
+    
+      <div class="panel panel-primary" th:if="${ligneCommandeValid}">
+      <div class="panel-heading">Récapitulatif sur la commande en cours:</div>
+       <div class="panel-body">
+        <!-- informations médicaments de recherche -->        
+        <table class="table">
+          <thead>
+           <tr>
+            <th>NumCommande</th><th>DateCommande</th><th>LibMédicament</th><th>SousFamilleMédicament</th><th>NomFournisseur</th><th>PrixAchat</th><th>Quantité</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr>
+            <td th:text="${ligneCommandeValid.pk.commande.num}"></td>
+            <td th:text="${ligneCommandeValid.pk.commande.date}"></td>
+            <td th:text="${ligneCommandeValid.pk.medicament.libelle}"></td>
+            <td th:text="${ligneCommandeValid.pk.medicament.sousFamille.libelle}"></td>
+            <td th:text="${ligneCommandeValid.pk.commande.fournisseur.nom}"></td>
+            <td th:text="${ligneCommandeValid.pk.medicament.prixAchat}"></td>
+            <td th:text="${ligneCommandeValid.quantiteMedicament}"></td>
+           </tr>
+          </tbody>
+         </table> 
+         <p>
+          <a th:href="@{reCommanderMedicament(idCommande=${ligneCommandeValid.pk.commande.num})}">ReCommander médicament</a>
+         </p>
+         <br/>
+         <p>
+          <a th:href="@{finaliserCommande(idCommande=${commande.num})}">Process</a>
+         </p>
+       </div>
+     </div>
+     
+     <div class="panel panel-primary" th:if="${lignesCommandes}">
+      <div class="panel-heading">Récapitulatif sur la commande en cours</div>
+       <div class="panel-body">
+        <p>Informations sur commande en cours:</p>
+        <table class="table">
+          <thead>
+           <tr>
+            <th>NumCommande</th><th>DateCommande</th><th>NomFournisseur</th>
+          </thead>
+          <tbody>
+           <tr>
+            <td th:text="${commande.num}"></td>
+            <td th:text="${commande.date}"></td>
+            <td th:text="${commande.fournisseur.nom}"></td>
+           </tr>
+          </tbody>
+         </table> 
+         <table class="table">
+          <thead>
+           <tr>
+            <th>LibMédicament</th><th>SousFamilleMédicament</th><th>PrixAchat</th><th>Quantité</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="lc:${lignesCommandes}">
+            <td th:text="${lc.pk.medicament.libelle}"></td>
+            <td th:text="${lc.pk.medicament.sousFamille.libelle}"></td>
+            <td th:text="${lc.pk.medicament.prixAchat}"></td>
+            <td th:text="${lc.quantiteMedicament}"></td>
+           </tr>
+          </tbody>
+         </table> 
+         <p>
+          <a th:href="@{reCommanderMedicament(idCommande=${commande.num})}">ReCommander médicament</a>
+         </p>
+         <br/>
+         <p>
+          <a th:href="@{finaliserCommande(idCommande=${commande.num})}">Process</a>
+         </p>
+       </div>
+     </div>
+     
+    </div> 
+ </div>
+</body>
+</html>

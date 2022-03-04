@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+    <h1>Gestion du Catalogue</h1>
+    <!-- formulaire recherche d'une famille de médicaments -->
+    <div class="col-md-12">
+    
+     <div class="panel panel-primary">
+      <div class="panel-heading">Consultation d'une famille des médicaments</div>
+       <div class="panel-body">
+        <form th:action="@{rechercherFamille}" method="get">
+         <div>
+          <label>Nom famille:</label>
+          <input type="text" name="motCle"/>
+          <button type="submit" class="btn btn-primary">ok</button>
+         </div>
+        </form>
+       </div>
+     </div>
+     <div class="panel panel-primary" th:if="${familles}">
+       <div class="panel-heading">Informations sur la famille</div>
+       <div class="panel-body">
+        <p>Informations famille recherché:</p>
+        
+        <table class="table">
+          <thead>
+           <tr>
+            <th>CodeFamille</th><th>LibelleFamille</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="f:${familles}">
+            <td th:text="${f.code}"></td>
+            <td th:text="${f.libelle}"></td>
+            <td><a th:href="@{showSousFamilles(code=${f.code})}">sousFamilles</a></td>
+            <td><a th:href="@{editFamille(code=${f.code})}">edit</a></td>
+            <td><a th:href="@{deleteFamille(code=${f.code})}">delete</a></td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <a th:href="@{formFamille}">Nouveau</a>
+         </p>
+       </div>
+     </div>
+     
+     <!-- formulaire recherche d'une sous famille de médicaments -->
+     <div class="panel panel-primary">
+      <div class="panel-heading">Consultation d'une sous famille des médicaments</div>
+       <div class="panel-body">
+        <form th:action="@{rechercherSousFamille}" method="get">
+         <div>
+          <label>Nom Sousfamille:</label>
+          <input type="text" name="motCle"/>
+          <button type="submit" class="btn btn-primary">ok</button>
+         </div>
+        </form>
+       </div>
+     </div>
+     
+     <!-- sousFamilles de recherche effectué + sousFamilles d'une famille sélectionnée -->
+     <div class="panel panel-primary" th:if="${sousFamilles}">
+       <div class="panel-heading">Informations sur sousFamilles</div>
+       <div class="panel-body">        
+        <table class="table">
+          <thead>
+           <tr>
+            <th>CodeSousFamille</th><th>LibelleSousFamille</th><th>Famille</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="sf:${sousFamilles}">
+            <td th:text="${sf.code}"></td>
+            <td th:text="${sf.libelle}"></td>
+            <td th:text="${sf.famille.libelle}"></td>
+            <td><a th:href="@{editerSousFamille(code=${sf.code})}">edit</a></td>
+            <td><a th:href="@{deleteSousFamille(code=${sf.code})}">delete</a></td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <a th:href="@{formSousFamille}">Nouveau</a>
+         </p>
+       </div>
+     </div>
+     
+      <!-- Gestion des stocks -->
+     <!-- formulaire recherche d'un stock -->
+     <div class="panel panel-primary">
+      <div class="panel-heading">Consultation d'un stock</div>
+       <div class="panel-body">
+        <form th:action="@{rechercherStock}" method="get">
+         <div>
+          <label>Nom Stock:</label>
+          <input type="text" name="motCle"/>
+          <button type="submit" class="btn btn-primary">ok</button>
+         </div>
+        </form>
+       </div>
+     </div>
+     
+     <!-- informations des stocks -->
+     <div class="panel panel-primary" th:if="${listStocks}">
+      <div class="panel-heading">Informations sur les stocks</div>
+       <div class="panel-body">
+        <!-- informations stock de recherche -->
+        <p>Informations stock recherché:</p>
+        
+        <table class="table">
+          <thead>
+           <tr>
+            <th>Code</th><th>Libelle</th><th>Quantité max</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="s:${listStocks}">
+            <td th:text="${s.id}"></td>
+            <td th:text="${s.libelle}"></td>
+            <td th:text="${s.quantiteMax}"></td>
+            <td><a onclick="return confirm('êtes vous sûr?')" th:href="@{deleteStock(id=${s.id})}"
+            >Delete</a></td>
+            <td><a th:href="@{formUpdateStock(libelle=${s.libelle})}">Editer</a></td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="container">
+          <ul class="nav nav-pills">
+           <li th:each="pa,status:${pages}" th:class="${pageCourante}==${status.index}?'active':''"><a th:href="@{rechercherStock(page=${status.index}, 
+           size=${status.size},motCle=${motCle})}" th:text="${status.index}"></a></li>
+          </ul>
+         </div>
+         <p>
+           <a th:href="@{formStock}">Nouveau</a>
+         </p>
+       </div>
+     </div> 
+     <!-- Gestion des stocks médicaments -->
+     <div class="panel panel-primary">
+      <div class="panel-heading">Gestion stocks médicaments</div>
+       <div class="panel-body">
+        <form th:action="@{searchStocksMédicamentsDeMedic}">
+         <label>Nom médicament</label>
+         <input type="text" name="motCle">
+         <button class="btn btn-primary">rechercher</button>
+        </form>
+       </div>
+     </div>
+     <!-- informations stocks médicaments de recherche -->
+        <div class="panel panel-primary" th:if="${stockMedicaments}">
+        <div class="panel-heading">Stocks médicament recherché</div>
+         <div class="panel-body">
+         <table class="table">
+          <thead>
+           <tr>
+            <th>CodeStock</th><th>Libellestock</th><th>LibMedic</th><th>QteMaxStock</th><th>QteMedicStock</th><th></th><th>AlertQteMedicStock</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr th:each="sm:${stockMedicaments}">
+            <td th:text="${sm.pk.stock.id}"></td>
+            <td th:text="${sm.pk.stock.libelle}"></td>
+            <td th:text="${sm.pk.medicament.libelle}"></td>
+            <td th:text="${sm.pk.stock.quantiteMax}"></td>
+            <td th:text="${sm.quantite}"></td> <!-- ToDo style alert stock -->
+            <td><span th:if="${sm.quantite}<=${sm.alertQuantite}" style="color:red">Stock insuffisant!!!</span></td>
+             <td th:text="${sm.alertQuantite}"></td>
+            <td>
+              <a th:href="@{editStockMedicament(libMedic=${sm.pk.medicament.libelle})}">Edit</a>
+            </td>
+            <td>
+              <a th:href="@{deleteStockMedicament(libMedic=${sm.pk.medicament.libelle})}">Delete</a>
+            </td>
+            <td>
+              <a th:href="@{vendreMedicament(codeMedicament=${sm.pk.medicament.code},codeStock=${sm.pk.stock.id})}">Vendre</a>
+            </td>
+            
+           </tr>
+          </tbody>
+         </table>
+         
+         <div>
+          <ul class="nav nav-pills">
+           <li th:each="pa,status:${pages}" th:class="${pageCourante}==${status.index}?'active':''">
+            <a th:href="@{stocksMedicamentRecherche(page=${status.index},size=${size},motCle=${motCle})}" th:text=${status.index}></a>
+           </li>
+          </ul>
+         </div>
+         <br/>
+         <p>
+              <a th:href="@{ajouterStockMedicament}">Ajouter</a>
+          </p>
+         
+         
+         
+         </div>
+        </div>
+
+
+		</div>
+</body>
+</html>

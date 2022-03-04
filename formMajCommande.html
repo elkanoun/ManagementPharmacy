@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Modifier une commande</div>
+       <div class="panel-body">
+       
+        <form th:action="@{saveCommande}" method="post">
+         <div>
+          <label>Num commande:</label>
+          <input type="text" name="num"
+          th:value="${commande.num}"/>
+         </div>
+         <!-- <div>
+          <label>Date commande:</label>
+          <input type="datetime" name="date"
+          th:value="${commande.date}"/>
+          <span class=".red" th:errors="${commande.date}"></span>
+         </div> -->
+         <div>
+          <label>Nom fournisseur:</label>
+          <select id="nomFournisseur" name="nomFournisseur">
+           <option th:each="f:${listFournisseurs}" th:value="${f.nom}" th:text="${f.nom}"></option>
+           <option th:value="${commande.fournisseur.nom}" th:text="${commande.fournisseur.nom}" selected="selected"></option>
+          </select>
+         </div>
+         <div>
+          <label>Montant commande:</label>
+          <input type="text" name="montant"
+          th:value="${commande.montant}"/>
+          <span class=".red" th:errors="${commande.montant}"></span>
+         </div>
+         <div>
+          <label>is commande valid:</label>
+          <input type="text" name="valid"
+          th:value="${commande.valid}"/>
+          <span class=".red" th:errors="${commande.valid}"></span>
+         </div>
+         <div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+         </div>
+        </form>
+       
+       </div>
+     </div>
+     
+     
+     
+     <p>
+       <a th:href="@{/commandes/rechercherMedicament(motCle='')}">Retour</a>
+     </p>
+     
+    </div>    
+ </div>
+</body>
+</html>

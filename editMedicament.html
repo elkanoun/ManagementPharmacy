@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">update médicament</div>
+       <div class="panel-body">
+       
+        <form th:action="@{/commandes/mergeMedicament}" method="post">
+        <div class="form-group">
+          <label class="control-label">Code médicament:</label>
+          <input class="form-control" type="text" name="code"
+          th:value="${medicament.code}"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Nom médicament:</label>
+          <input class="form-control" type="text" name="libelle"
+          th:value="${medicament.libelle}"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Sous famille:</label>
+          <select class="form-control" id="libSousFamille" name="libSousFamille">
+           <option th:each="sf:${listSousFamilles}" th:text="${sf.libelle}" th:value="${sf.libelle}"></option>
+          </select>
+        </div>
+         <div class="form-group">
+          <label class="control-label">prix Achat:</label>
+          <input class="form-control" type="text" name="prixAchat"
+          th:value="${medicament.prixAchat}"/>
+        </div>
+         <div class="form-group">
+          <label class="control-label">prix Vente:</label>
+          <input class="form-control" type="text" name="prixVente"
+          th:value="${medicament.prixVente}"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Notice:</label>
+          <input class="form-control" type="text" name="notice"
+          th:value="${medicament.notice}"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">date Expiration:</label>
+          <input class="form-control" type="text" name="dateExpiration"
+          th:value="${medicament.dateExpiration}"/>
+         </div>
+         <div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+         </div>
+        </form>
+       
+       </div>
+     </div>
+     
+     
+     
+     <p>
+       <a th:href="@{/commandes/rechercherMedicament(motCle='')}">Retour</a>
+     </p>
+     
+    </div>    
+ </div>
+</body>
+</html>

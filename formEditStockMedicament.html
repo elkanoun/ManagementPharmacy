@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">update stock médicament</div>
+       <div class="panel-body">
+       
+        <form th:action="@{saveStockMedicament}" method="post">
+        <div class="form-group">
+          <label class="control-label">Code Stock:</label>
+          <input class="form-control" type="text" name="id"
+          th:value="${stockMedicament.pk.stock.id}"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Lib Médic:</label>
+          <input class="form-control" type="text" name="libelle"
+          th:value="${stockMedicament.pk.medicament.libelle}"/>
+        </div>
+         <div class="form-group">
+          <label class="control-label">Lib Stock:</label>
+          <input class="form-control" type="text" name="libelle"
+          th:value="${stockMedicament.pk.stock.libelle}"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Qte Médic Stock:</label>
+          <input class="form-control" type="text" name="quantite"
+          th:value="${stockMedicament.quantite}"/>
+         </div>
+         <div class="form-group">
+          <label class="control-label">Qte Max Stock:</label>
+          <input class="form-control" type="text" name="quantiteMax"
+          th:value="${stockMedicament.pk.stock.quantiteMax}"/>
+        </div>
+         <div class="form-group">
+          <label class="control-label">Alert Qte Médic Stock:</label>
+          <input class="form-control" type="text" name="alertQuantite"
+          th:value="${stockMedicament.alertQuantite}"/>
+         </div>
+        
+         
+         <div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+         </div>
+        </form>
+       
+       </div>
+     </div>
+     
+     
+     
+     <p>
+       <a th:href="@{/commandes/rechercherMedicament(motCle='')}">Retour</a>
+     </p>
+     
+    </div>    
+ </div>
+</body>
+</html>

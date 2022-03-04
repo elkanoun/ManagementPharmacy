@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.nz.net/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>GestionPharmacie</title>
+ <link rel="stylesheet" type="text/css"
+ href="../statsic/css/bootstrap.min.css"
+ th:href="@{css/bootstrap.min.css}"
+ />
+</head>
+<body>
+ <div layout:fragment="content">
+     
+    <div class="col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">Commander un médicament</div>
+       <div class="panel-body">
+       
+        <form th:action="@{processCommanderMedicament}" method="post">
+         <div>
+          <label>Nom médicament:</label>
+          <select id="libelleMedicament" name="libelleMedicament">
+           <option th:each="m:${listMedicaments}" th:value="${m.libelle}" th:text="${m.libelle}"></option>
+           <option th:value="${medicamentChoisi.libelle}" th:text="${medicamentChoisi.libelle}" selected="selected"></option>
+          </select>
+          <p>
+            <a th:href="@{formMedicament}">Nouveau</a>
+          </p>
+         </div>
+         <div>
+          <label>Nom fournisseur:</label>
+          <select id="nomFournisseur" name="nomFournisseur">
+           <option th:each="f:${listFournisseurs}" th:value="${f.nom}" th:text="${f.nom}"></option>
+          </select>
+          <p>
+            <a th:href="@{formFournisseur}">Nouveau</a>
+          </p>
+         </div>
+         <div>
+          <label>Quantité:</label>
+          <input type="text" name="quantiteMedicament"/>
+         </div>
+         <div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+         </div>
+        </form>
+        <p>
+         <a th:href="@{rechercherMedicament?motCle=}">Retour</a>
+       </p>
+       
+       </div>
+     </div>
+     
+     <div class="panel panel-primary">
+      <div class="panel-heading">Liste des commandes</div>
+       <div class="panel-body">
+       
+       
+       </div>
+     </div>
+     
+     
+     
+    </div>    
+ </div>
+</body>
+</html>

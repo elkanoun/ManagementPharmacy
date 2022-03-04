@@ -1,0 +1,13 @@
+.red{
+	color: red;
+}
+.spacer{
+	margin-top: 20px;
+}
+
+.alert-class{
+	color: red;
+}
+.accueil{
+	background-image: url("../images/accueil.jpg");
+}
